@@ -1,3 +1,3 @@
-#Job Report
+# Job Report
 
-###ditujukan untuk memudahkan proses input laporan harian area scrap PT KMI
+### ditujukan untuk memudahkan proses input laporan harian area scrap PT KMI

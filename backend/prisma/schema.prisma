@@ -1,0 +1,31 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model LaporanPekerjaan {
+  id             Int      @id @default(autoincrement())
+  nama           String
+  jenisPekerjaan String
+  hasil          Hasil
+}
+
+enum Hasil {
+  KG
+  PALET
+  BOX
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  role  Role
+}
+
+enum Role {
+  USER
+  ADMIN
+}

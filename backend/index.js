@@ -13,6 +13,12 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
+// Import dan gunakan router
+const createLaporanRouter = require("./laporan/create/create");
+const readLaporanRouter = require("./laporan/read/read");
+const updateLaporanRouter = require("./laporan/update/update");
+const deleteLaporanRouter = require("./laporan/delete/delete");
+
 // Endpoint untuk login
 app.post("/login", async (req, res) => {
   try {
@@ -53,48 +59,11 @@ app.post(
   }
 );
 
-// Endpoint untuk input laporan pekerjaan
-app.post(
-  "/laporan",
-  authenticate,
-  authorize(["USER", "ADMIN"]),
-  async (req, res) => {
-    try {
-      const { nama, jenisPekerjaan, hasil } = req.body;
-
-      const laporan = await prisma.laporanPekerjaan.create({
-        data: {
-          nama,
-          jenisPekerjaan,
-          hasil,
-        },
-      });
-
-      res.json(laporan);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ error: "Terjadi kesalahan saat menyimpan laporan" });
-    }
-  }
-);
-
-// Endpoint untuk mendapatkan laporan pekerjaan
-app.get(
-  "/laporan",
-  authenticate,
-  authorize(["USER", "ADMIN"]),
-  async (req, res) => {
-    try {
-      const laporan = await prisma.laporanPekerjaan.findMany();
-      res.json(laporan);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ error: "Terjadi kesalahan saat mengambil laporan" });
-    }
-  }
-);
+// Gunakan router untuk endpoint CRUD laporan
+app.use("/laporan/create", createLaporanRouter);
+app.use("/laporan/read", readLaporanRouter);
+app.use("/laporan/update", updateLaporanRouter);
+app.use("/laporan/delete", deleteLaporanRouter);
 
 // Endpoint sementara untuk membuat akun admin
 app.post("/create-admin", async (req, res) => {

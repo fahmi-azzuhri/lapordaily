@@ -11,8 +11,10 @@ model LaporanPekerjaan {
   id             Int      @id @default(autoincrement())
   nama           String
   jenisPekerjaan String
-  hasil          Hasil
-  tanggal        DateTime @default(now())
+  hasil          String
+  tanggal        DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 enum Hasil {

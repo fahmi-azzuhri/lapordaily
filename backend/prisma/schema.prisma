@@ -12,6 +12,7 @@ model LaporanPekerjaan {
   nama           String
   jenisPekerjaan String
   hasil          Hasil
+  tanggal        DateTime @default(now())
 }
 
 enum Hasil {
@@ -21,8 +22,10 @@ enum Hasil {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  role  Role
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  role     Role
 }
 
 enum Role {

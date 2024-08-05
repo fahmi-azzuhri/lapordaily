@@ -11,7 +11,11 @@ router.get(
   authorize(["USER", "ADMIN"]),
   async (req, res) => {
     try {
-      const laporan = await prisma.laporanPekerjaan.findMany();
+      const laporan = await prisma.laporanPekerjaan.findMany({
+        include: {
+          user: true, // Menyertakan informasi pengguna
+        },
+      });
       res.json(laporan);
     } catch (error) {
       res
@@ -31,6 +35,9 @@ router.get(
     try {
       const laporan = await prisma.laporanPekerjaan.findUnique({
         where: { id: Number(id) },
+        include: {
+          user: true, // Menyertakan informasi pengguna
+        },
       });
       if (laporan) {
         res.json(laporan);

@@ -14,10 +14,10 @@ const prisma = new PrismaClient();
 app.use(express.json());
 
 // Import dan gunakan router
-const createLaporanRouter = require("./laporan/create/create");
-const readLaporanRouter = require("./laporan/read/read");
-const updateLaporanRouter = require("./laporan/update/update");
-const deleteLaporanRouter = require("./laporan/delete/delete");
+const createLaporanRouter = require("./laporan/create/index");
+const readLaporanRouter = require("./laporan/read/index");
+const updateLaporanRouter = require("./laporan/update/index");
+const deleteLaporanRouter = require("./laporan/delete/index");
 
 // Endpoint untuk login
 app.post("/login", async (req, res) => {

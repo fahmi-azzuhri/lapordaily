@@ -1,10 +1,10 @@
 import React from "react";
-import { Login } from "./components/auth/Login";
+import AppRoutes from "../routes";
 
 export default function App() {
   return (
     <div>
-      <Login />
+      <AppRoutes />
     </div>
   );
 }

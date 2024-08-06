@@ -1,16 +1,42 @@
 import { useState } from "react";
-
+import axios from "axios";
 import ViewLogin from "../../views/auth/ViewLogin";
-
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 export function Login() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/login", {
+        username: username,
+        password: password,
+      });
+      console.log(response.data);
 
+      Cookies.set("token", response.data.token, { expires: 1, secure: true });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(
+        "Login error:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
   return (
     <section className="grid text-center h-screen items-center p-8">
       <ViewLogin
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
         passwordShown={passwordShown}
         togglePasswordVisiblity={togglePasswordVisiblity}
+        handleLogin={handleLogin}
       />
     </section>
   );

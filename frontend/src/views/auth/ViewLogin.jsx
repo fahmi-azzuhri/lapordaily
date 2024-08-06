@@ -2,7 +2,15 @@ import React from "react";
 import { Typography, Input } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
-export default function ViewLogin({ passwordShown, togglePasswordVisiblity }) {
+export default function ViewLogin({
+  username,
+  setUsername,
+  password,
+  setPassword,
+  handleLogin,
+  passwordShown,
+  togglePasswordVisiblity,
+}) {
   return (
     <div>
       <Typography variant="h3" color="blue-gray" className="mb-2">
@@ -11,23 +19,25 @@ export default function ViewLogin({ passwordShown, togglePasswordVisiblity }) {
       <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
         Enter your email and password to sign in
       </Typography>
-      <form action="#" className="mx-auto max-w-[24rem] text-left">
+      <form onSubmit={handleLogin} className="mx-auto max-w-[24rem] text-left">
         <div className="mb-6">
           <label htmlFor="email">
             <Typography
               variant="small"
               className="mb-2 block font-medium text-gray-900"
             >
-              Your Email
+              Your Username
             </Typography>
           </label>
           <Input
-            id="email"
+            id="username"
             color="gray"
             size="lg"
-            type="email"
-            name="email"
-            placeholder="name@mail.com"
+            type="username"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="your username"
             className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200 border border-blue-gray-100 rounded-md p-3"
             labelProps={{
               className: "hidden",
@@ -45,6 +55,8 @@ export default function ViewLogin({ passwordShown, togglePasswordVisiblity }) {
           </label>
           <div className="relative">
             <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               id="password"
               size="lg"
               placeholder="********"

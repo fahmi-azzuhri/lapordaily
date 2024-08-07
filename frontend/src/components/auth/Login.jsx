@@ -19,7 +19,7 @@ export function Login() {
       console.log(response.data);
 
       Cookies.set("token", response.data.token, { expires: 1, secure: true });
-      navigate("/dashboard");
+      navigate("/user/input");
     } catch (error) {
       console.error(
         "Login error:",

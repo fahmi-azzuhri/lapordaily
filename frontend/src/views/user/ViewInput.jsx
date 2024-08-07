@@ -1,36 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Inputan = () => {
-  const today = new Date().toISOString().split("T")[0];
-
-  const [deskripsiList, setDeskripsiList] = useState([""]);
-
-  // Array jenis pekerjaan dan satuan
-  const jenisPekerjaanOptions = [
-    "IR-1",
-    "Scrap Tromol",
-    "Kebersihan Hall",
-    "Mesin LV",
-    "Mesin MV",
-    "Mesin HV",
-    "Cat Tromol",
-    "Quading",
-    "Fk",
-  ];
-
-  const satuanOptions = ["kg", "palet", "box"];
-
-  const addDeskripsi = () => {
-    setDeskripsiList([...deskripsiList, ""]);
-  };
-
+const ViewInput = ({
+  name,
+  setName,
+  tanggal,
+  setTanggal,
+  deskripsiList,
+  setDeskripsiList,
+  jenisPekerjaan,
+  setJenisPekerjaan,
+  handleSubmit,
+  addDeskripsi,
+  jenisPekerjaanOptions,
+  satuanOptions,
+  setHasil,
+  satuan,
+  setSatuan,
+  today,
+  hasil,
+}) => {
   return (
     <div className="max-w-sm mx-auto p-6 bg-white shadow-md rounded-md">
       <h2 className="text-lg font-semibold mb-4 text-white text-center bg-gray-900 p-3 rounded-md">
         Laporan Harian
       </h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -43,6 +38,8 @@ const Inputan = () => {
             id="tanggal"
             defaultValue={today}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={(e) => setTanggal(e.target.value)}
+            value={tanggal}
           />
         </div>
 
@@ -58,6 +55,8 @@ const Inputan = () => {
             id="name"
             placeholder="Masukkan nama"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
           />
         </div>
 
@@ -71,6 +70,8 @@ const Inputan = () => {
           <select
             id="jenisPekerjaan"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={(e) => setJenisPekerjaan(e.target.value)}
+            value={jenisPekerjaan}
           >
             {jenisPekerjaanOptions.map((option) => (
               <option key={option} value={option}>
@@ -122,6 +123,8 @@ const Inputan = () => {
                   id="hasil"
                   placeholder="Masukkan hasil"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={(e) => setHasil(e.target.value)}
+                  value={hasil}
                 />
               </div>
               <div className="w-[120px]">
@@ -134,6 +137,8 @@ const Inputan = () => {
                 <select
                   id="satuan"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={(e) => setSatuan(e.target.value)}
+                  value={satuan}
                 >
                   {satuanOptions.map((option) => (
                     <option key={option} value={option}>
@@ -159,4 +164,4 @@ const Inputan = () => {
   );
 };
 
-export default Inputan;
+export default ViewInput;

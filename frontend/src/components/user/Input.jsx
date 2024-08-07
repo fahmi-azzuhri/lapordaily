@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
 import ViewInput from "../../views/user/ViewInput";
 
 const Input = () => {
@@ -13,7 +13,7 @@ const Input = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/laporan", {
+      const response = await axios.post("http://localhost:3000/api/laporan", {
         tanggal,
         nama: name,
         deskripsi: deskripsiList,
@@ -28,20 +28,6 @@ const Input = () => {
   };
 
   const today = new Date().toISOString().split("T")[0];
-
-  const jenisPekerjaanOptions = [
-    "IR-1",
-    "Scrap Tromol",
-    "Kebersihan Hall",
-    "Mesin LV",
-    "Mesin MV",
-    "Mesin HV",
-    "Cat Tromol",
-    "Quading",
-    "Fk",
-  ];
-
-  const satuanOptions = ["kg", "palet", "box"];
 
   const addDeskripsi = () => {
     setDeskripsiList([...deskripsiList, ""]);
@@ -59,12 +45,11 @@ const Input = () => {
       setJenisPekerjaan={setJenisPekerjaan}
       handleSubmit={handleSubmit}
       addDeskripsi={addDeskripsi}
-      jenisPekerjaanOptions={jenisPekerjaanOptions}
-      satuanOptions={satuanOptions}
       setHasil={setHasil}
       satuan={satuan}
       setSatuan={setSatuan}
       today={today}
+      hasil={hasil}
     />
   );
 };

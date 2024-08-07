@@ -11,8 +11,6 @@ const ViewInput = ({
   setJenisPekerjaan,
   handleSubmit,
   addDeskripsi,
-  jenisPekerjaanOptions,
-  satuanOptions,
   setHasil,
   satuan,
   setSatuan,
@@ -36,10 +34,9 @@ const ViewInput = ({
           <input
             type="date"
             id="tanggal"
-            defaultValue={today}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setTanggal(e.target.value)}
             value={tanggal}
+            onChange={(e) => setTanggal(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
 
@@ -54,9 +51,9 @@ const ViewInput = ({
             type="text"
             id="name"
             placeholder="Masukkan nama"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setName(e.target.value)}
             value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
 
@@ -69,15 +66,20 @@ const ViewInput = ({
           </label>
           <select
             id="jenisPekerjaan"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setJenisPekerjaan(e.target.value)}
             value={jenisPekerjaan}
+            onChange={(e) => setJenisPekerjaan(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
-            {jenisPekerjaanOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
+            <option value="">Pilih Jenis Pekerjaan</option>
+            <option value="IR-1">IR-1</option>
+            <option value="Scrap Tromol">Scrap Tromol</option>
+            <option value="Kebersihan Hall">Kebersihan Hall</option>
+            <option value="Mesin LV">Mesin LV</option>
+            <option value="Mesin MV">Mesin MV</option>
+            <option value="Mesin HV">Mesin HV</option>
+            <option value="Cat Tromol">Cat Tromol</option>
+            <option value="Quading">Quading</option>
+            <option value="Fk">Fk</option>
           </select>
         </div>
 
@@ -90,13 +92,13 @@ const ViewInput = ({
               key={index}
               type="text"
               placeholder={`Masukkan deskripsi pekerjaan ${index + 1}`}
-              className="shadow appearance-none border rounded w-full py-2 px-3 mb-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={deskripsi}
               onChange={(e) => {
                 const newList = [...deskripsiList];
                 newList[index] = e.target.value;
                 setDeskripsiList(newList);
               }}
+              className="shadow appearance-none border rounded w-full py-2 px-3 mb-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           ))}
           <button
@@ -122,9 +124,9 @@ const ViewInput = ({
                   type="text"
                   id="hasil"
                   placeholder="Masukkan hasil"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={(e) => setHasil(e.target.value)}
                   value={hasil}
+                  onChange={(e) => setHasil(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="w-[120px]">
@@ -136,15 +138,14 @@ const ViewInput = ({
                 </label>
                 <select
                   id="satuan"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={(e) => setSatuan(e.target.value)}
                   value={satuan}
+                  onChange={(e) => setSatuan(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
-                  {satuanOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
+                  <option value="">Pilih Satuan</option>
+                  <option value="kg">kg</option>
+                  <option value="palet">palet</option>
+                  <option value="box">box</option>
                 </select>
               </div>
             </div>

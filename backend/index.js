@@ -1,29 +1,23 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
+const cors = require("cors");
 const {
   generateToken,
   verifyPassword,
   authenticate,
   authorize,
 } = require("./auth/auth");
-const cors = require("cors");
+
 const app = express();
 const prisma = new PrismaClient();
-
+const laporanRouter = require("./laporan/laporanRouter");
 app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:5173",
   })
 );
-// Import dan gunakan router
-const createLaporanRouter = require("./laporan/create/index");
-const readLaporanRouter = require("./laporan/read/index");
-const updateLaporanRouter = require("./laporan/update/index");
-const deleteLaporanRouter = require("./laporan/delete/index");
-
-// Endpoint untuk login
 app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -63,13 +57,7 @@ app.post(
   }
 );
 
-// Gunakan router untuk endpoint CRUD laporan
-app.use("/laporan/create", createLaporanRouter);
-app.use("/laporan/read", readLaporanRouter);
-app.use("/laporan/update", updateLaporanRouter);
-app.use("/laporan/delete", deleteLaporanRouter);
-
-// Endpoint sementara untuk membuat akun admin
+// Endpoint untuk membuat akun admin (hanya untuk setup awal)
 app.post("/create-admin", async (req, res) => {
   try {
     const username = "admin";
@@ -97,7 +85,7 @@ app.post("/create-admin", async (req, res) => {
     res.status(500).json({ error: "Error creating admin account" });
   }
 });
-
+app.use("/api", laporanRouter, authenticate, authorize(["ADMIN", "USER"]));
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -20,7 +20,7 @@ router.post("/laporan", async (req, res) => {
       },
     });
 
-    res.json({ success: true, message: "Data berhasil ditambahkan" });
+    res.json({ success: true, message: "Data berhasil ditambahkan" }, laporan);
   } catch (error) {
     res
       .status(500)

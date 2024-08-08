@@ -19,7 +19,7 @@ export function Login() {
       const { token, role } = response.data;
       Cookies.set("token", token, { expires: 1, secure: true });
       if (role === "ADMIN") {
-        navigate("/dashboard");
+        navigate("/admin/dashboard");
       } else {
         navigate("/user/input");
       }

@@ -16,10 +16,13 @@ export function Login() {
         username: username,
         password: password,
       });
-      console.log(response.data);
-
-      Cookies.set("token", response.data.token, { expires: 1, secure: true });
-      navigate("/user/input");
+      const { token, role } = response.data;
+      Cookies.set("token", token, { expires: 1, secure: true });
+      if (role === "ADMIN") {
+        navigate("/dashboard");
+      } else {
+        navigate("/user/input");
+      }
     } catch (error) {
       console.error(
         "Login error:",

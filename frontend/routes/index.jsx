@@ -9,8 +9,8 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/dashboard" element={<Home />} />
-      <Route path="/user/input" element={<Input />} />
+      <Route path="/dashboard" element={<Home />} replace />
+      <Route path="/user/input" element={<Input />} replace />
     </Routes>
   );
 }

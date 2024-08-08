@@ -12,13 +12,10 @@ const Input = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const parseDate = (dateString) => {
-      const [day, month, year] = dateString.split("/");
-      return `${year}-${month}-${day}`;
-    };
+
     try {
       const response = await axios.post("http://localhost:3000/api/laporan", {
-        tanggal: parseDate(tanggal),
+        tanggal,
         nama: name,
         deskripsi: deskripsiList,
         jenisPekerjaan,
@@ -32,10 +29,7 @@ const Input = () => {
   };
 
   const today = new Date().toISOString().split("T")[0];
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
-  };
+
   const addDeskripsi = () => {
     setDeskripsiList([...deskripsiList, ""]);
   };
@@ -44,7 +38,7 @@ const Input = () => {
     <ViewInput
       name={name}
       setName={setName}
-      tanggal={formatDate(tanggal)}
+      tanggal={tanggal}
       setTanggal={setTanggal}
       deskripsiList={deskripsiList}
       setDeskripsiList={setDeskripsiList}

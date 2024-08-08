@@ -146,6 +146,9 @@ const ViewInput = ({
                   <option value="kg">kg</option>
                   <option value="palet">palet</option>
                   <option value="box">box</option>
+                  <option value="bobbin">bobbin</option>
+                  <option value="tromol">tromol</option>
+                  <option value="lainnya">lainnya</option>
                 </select>
               </div>
             </div>

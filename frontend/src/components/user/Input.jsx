@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ViewInput from "../../views/user/ViewInput";
-
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 const Input = () => {
   const [name, setName] = useState("");
   const [tanggal, setTanggal] = useState("");
@@ -9,7 +10,16 @@ const Input = () => {
   const [jenisPekerjaan, setJenisPekerjaan] = useState("");
   const [hasil, setHasil] = useState("");
   const [satuan, setSatuan] = useState("");
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const username = Cookies.get("username");
+    if (username) {
+      setName(username);
+    } else {
+      navigate("/login");
+    }
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

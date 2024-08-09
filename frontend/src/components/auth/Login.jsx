@@ -18,6 +18,7 @@ export function Login() {
       });
       const { token, role } = response.data;
       Cookies.set("token", token, { expires: 1, secure: true });
+      Cookies.set("username", username);
       if (role === "ADMIN") {
         navigate("/admin/dashboard");
       } else {

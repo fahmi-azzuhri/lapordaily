@@ -17,7 +17,8 @@ export function Login() {
         password: password,
       });
       const { token, role } = response.data;
-      Cookies.set("token", token, { expires: 1, secure: true });
+      const expires = new Date(new Date().getTime() + 60 * 60 * 1000);
+      Cookies.set("token", token, { expires, secure: true });
       Cookies.set("username", username);
       if (role === "ADMIN") {
         navigate("/admin/dashboard");

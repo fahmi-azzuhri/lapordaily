@@ -3,7 +3,7 @@ import axios from "axios";
 import ViewInput from "../../views/user/ViewInput";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import toast, { Toaster } from "react-hot-toast";
 const Input = () => {
   const [name, setName] = useState("");
   const [tanggal, setTanggal] = useState("");
@@ -33,9 +33,22 @@ const Input = () => {
         hasil,
         satuan,
       });
-      console.log("Data berhasil dikirim");
+      toast.success("Laporan berhasil dibuat", {
+        style: {
+          padding: "9px",
+          borderRadius: "10px",
+        },
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
+      toast.error("Laporan gagal dibuat", {
+        style: {
+          padding: "9px",
+          borderRadius: "10px",
+        },
+      });
     }
   };
 
@@ -46,23 +59,26 @@ const Input = () => {
   };
 
   return (
-    <ViewInput
-      name={name}
-      setName={setName}
-      tanggal={tanggal}
-      setTanggal={setTanggal}
-      deskripsiList={deskripsiList}
-      setDeskripsiList={setDeskripsiList}
-      jenisPekerjaan={jenisPekerjaan}
-      setJenisPekerjaan={setJenisPekerjaan}
-      handleSubmit={handleSubmit}
-      addDeskripsi={addDeskripsi}
-      setHasil={setHasil}
-      satuan={satuan}
-      setSatuan={setSatuan}
-      today={today}
-      hasil={hasil}
-    />
+    <>
+      <Toaster position="top-right" reverseOrder={false} />
+      <ViewInput
+        name={name}
+        setName={setName}
+        tanggal={tanggal}
+        setTanggal={setTanggal}
+        deskripsiList={deskripsiList}
+        setDeskripsiList={setDeskripsiList}
+        jenisPekerjaan={jenisPekerjaan}
+        setJenisPekerjaan={setJenisPekerjaan}
+        handleSubmit={handleSubmit}
+        addDeskripsi={addDeskripsi}
+        setHasil={setHasil}
+        satuan={satuan}
+        setSatuan={setSatuan}
+        today={today}
+        hasil={hasil}
+      />
+    </>
   );
 };
 

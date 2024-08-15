@@ -8,19 +8,20 @@ router.post("/laporan", async (req, res) => {
   try {
     const { tanggal, nama, jenisPekerjaan, deskripsi, hasil, satuan } =
       req.body;
+    const deskripsiString = deskripsi.join("|");
 
     const laporan = await prisma.laporanPekerjaan.create({
       data: {
         tanggal: new Date(tanggal),
         nama,
         jenisPekerjaan,
-        deskripsi,
+        deskripsi: deskripsiString,
         hasil,
         satuan,
       },
     });
 
-    res.json({ success: true, message: "Data berhasil ditambahkan" }, laporan);
+    res.json({ success: true, message: "Data berhasil ditambahkan", laporan });
   } catch (error) {
     res
       .status(500)
@@ -59,15 +60,16 @@ router.put("/laporan/:id", async (req, res) => {
   const { id } = req.params;
   const { tanggal, nama, jenisPekerjaan, deskripsi, hasil, satuan } = req.body;
   try {
-    const laporan = await prisma.laporanPekerjaan.update({
-      where: { id: parseInt(id) },
+    const deskripsiString = deskripsi.join("|");
+    const satuanString = satuan.join("|");
+    const laporan = await prisma.laporanPekerjaan.create({
       data: {
         tanggal: new Date(tanggal),
         nama,
         jenisPekerjaan,
-        deskripsi,
+        deskripsi: deskripsiString,
         hasil,
-        satuan,
+        satuan: satuanString,
       },
     });
     res.json(laporan);

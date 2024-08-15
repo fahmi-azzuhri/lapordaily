@@ -13,9 +13,6 @@ export default function ViewLogin({
 }) {
   return (
     <div>
-      <Typography variant="h3" color="blue-gray" className="mb-2">
-        Sign In
-      </Typography>
       <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
         Enter your email and password to sign in
       </Typography>

@@ -49,6 +49,7 @@ const ViewInput = ({
           </label>
           <input
             type="text"
+            disabled
             id="name"
             placeholder="Masukkan nama"
             value={name}

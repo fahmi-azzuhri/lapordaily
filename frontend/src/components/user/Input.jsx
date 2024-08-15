@@ -21,6 +21,7 @@ const Input = () => {
       navigate("/login");
     }
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

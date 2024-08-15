@@ -1,3 +1,8 @@
-# Job Report
-
-### ditujukan untuk memudahkan proses input laporan harian area scrap PT KMI
+# Lapor Daily
+ ## Tech stack :
+ - Vite ReactJS
+ - TailwindCSS
+ - Prisma
+ - ExpressJS
+ - MySQL
+### ditujukan untuk memudahkan proses input dan pencarian laporan pekerjaan

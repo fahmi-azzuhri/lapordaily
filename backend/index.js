@@ -28,7 +28,7 @@ app.post("/login", async (req, res) => {
     }
 
     const token = generateToken(user);
-    res.json({ token });
+    res.json({ token, role: user.role });
   } catch (error) {
     res.status(500).json({ error: "Terjadi kesalahan saat login" });
   }

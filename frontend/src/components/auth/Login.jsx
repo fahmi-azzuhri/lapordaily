@@ -22,12 +22,8 @@ export function Login() {
       const expires = new Date(new Date().getTime() + 60 * 60 * 1000);
       Cookies.set("token", token, { expires, secure: true });
       Cookies.set("username", username);
-      toast.success("Login Berhasil", {
-        style: {
-          padding: "9px",
-          borderRadius: "10px",
-        },
-      });
+      Cookies.set("role", role);
+
       setTimeout(() => {
         if (role === "ADMIN") {
           navigate("/admin/dashboard");
@@ -35,10 +31,23 @@ export function Login() {
           navigate("/user/input");
         }
       }, 3000);
+      toast.success("Login Berhasil", {
+        style: {
+          padding: "9px",
+          borderRadius: "10px",
+        },
+      });
+      console.log(role);
     } catch (error) {
-      toast.error("Login Gagal");
+      toast.error("Login Gagal", {
+        style: {
+          padding: "9px",
+          borderRadius: "10px",
+        },
+      });
     }
   };
+
   return (
     <section className="grid text-center h-screen items-center p-8">
       <Toaster position="top-right" reverseOrder={false} />

@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import toast, { Toaster } from "react-hot-toast";
 function Sidebar() {
   const [activeTab, setActiveTab] = useState("laporan");
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    Cookies.remove("token");
-    navigate("/");
+    ["token", "username", "role"].forEach((cookie) => Cookies.remove(cookie));
+    toast.success("Logout Berhasil", {
+      style: {
+        padding: "9px",
+        borderRadius: "10px",
+      },
+    });
+    setTimeout(() => {
+      navigate("/");
+    }, 3000);
     setActiveTab("logout");
   };
 
@@ -21,6 +29,7 @@ function Sidebar() {
 
   return (
     <div className="w-64 h-screen bg-gray-800 text-white p-5">
+      <Toaster position="top-right" reverseOrder={false} />
       <h1 className="text-xl font-bold mb-6">Dashboard</h1>
       <ul>
         <li

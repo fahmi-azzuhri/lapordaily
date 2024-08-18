@@ -21,7 +21,7 @@ function Dashboard() {
     <div className="flex-grow p-6">
       <table className="min-w-full bg-white border border-gray-200">
         <thead>
-          <tr>
+          <tr className="bg-gray-700 text-white ">
             <th className="border px-4 py-2">Tanggal</th>
             <th className="border px-4 py-2">Nama</th>
             <th className="border px-4 py-2">Jenis Pekerjaan</th>

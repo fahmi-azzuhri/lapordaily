@@ -6,7 +6,7 @@ function ViewDashboard() {
   const [activeTab, setActiveTab] = useState("laporan");
 
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
       <Sidebar setActiveTab={setActiveTab} activeTab={activeTab} />
       <div className="flex-grow">
         {activeTab === "laporan" && <Dashboard />}

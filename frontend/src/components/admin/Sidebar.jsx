@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
+
 function Sidebar() {
   const [activeTab, setActiveTab] = useState("laporan");
   const navigate = useNavigate();
@@ -23,12 +24,12 @@ function Sidebar() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     if (tab === "laporan") {
-      navigate("/"); // Navigasi ke halaman dashboard
+      navigate("/admin/dashboard");
     }
   };
 
   return (
-    <div className="w-64 h-screen bg-gray-800 text-white p-5">
+    <div className="w-full md:w-64 lg:h-screen md:h-64 bg-gray-800 text-white p-5">
       <Toaster position="top-right" reverseOrder={false} />
       <h1 className="text-xl font-bold mb-6">Dashboard</h1>
       <ul>

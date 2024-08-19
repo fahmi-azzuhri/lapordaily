@@ -8,10 +8,12 @@
    
 ### Frontend
 - cd frontend
+- npm install
 - npm run dev
 
 ### Backend
 - cd backend
+- npm install
 - npx prisma migrate dev --name init
 - node index.js
 

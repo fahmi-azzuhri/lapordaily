@@ -18,7 +18,7 @@ const ViewInput = ({
   hasil,
 }) => {
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white shadow-md rounded-md">
+    <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-6 bg-white shadow-md rounded-md">
       <h2 className="text-lg font-semibold mb-4 text-white text-center bg-gray-900 p-3 rounded-md">
         Laporan Harian
       </h2>
@@ -112,46 +112,44 @@ const ViewInput = ({
         </div>
 
         <div className="mb-4">
-          <div className="flex flex-col">
-            <div className="flex flex-row gap-4">
-              <div>
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="hasil"
-                >
-                  Hasil
-                </label>
-                <input
-                  type="text"
-                  id="hasil"
-                  placeholder="Masukkan hasil"
-                  value={hasil}
-                  onChange={(e) => setHasil(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-              <div className="w-[120px]">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="satuan"
-                >
-                  Satuan
-                </label>
-                <select
-                  id="satuan"
-                  value={satuan}
-                  onChange={(e) => setSatuan(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                >
-                  <option value="">Pilih Satuan</option>
-                  <option value="kg">kg</option>
-                  <option value="palet">palet</option>
-                  <option value="box">box</option>
-                  <option value="bobbin">bobbin</option>
-                  <option value="tromol">tromol</option>
-                  <option value="lainnya">lainnya</option>
-                </select>
-              </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-grow">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="hasil"
+              >
+                Hasil
+              </label>
+              <input
+                type="text"
+                id="hasil"
+                placeholder="Masukkan hasil"
+                value={hasil}
+                onChange={(e) => setHasil(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="w-full sm:w-[120px]">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="satuan"
+              >
+                Satuan
+              </label>
+              <select
+                id="satuan"
+                value={satuan}
+                onChange={(e) => setSatuan(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option value="">Pilih Satuan</option>
+                <option value="kg">kg</option>
+                <option value="palet">palet</option>
+                <option value="box">box</option>
+                <option value="bobbin">bobbin</option>
+                <option value="tromol">tromol</option>
+                <option value="lainnya">lainnya</option>
+              </select>
             </div>
           </div>
         </div>

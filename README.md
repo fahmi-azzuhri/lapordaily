@@ -5,4 +5,15 @@
  - Prisma
  - ExpressJS
  - MySQL
-### ditujukan untuk memudahkan proses input dan pencarian laporan pekerjaan
+   
+### Frontend
+- cd frontend
+- npm run dev
+
+### Backend
+- cd backend
+- npx prisma migrate dev --name init
+- node index.js
+
+### DB
+- run apache & mysql xampp control panel or any other web server

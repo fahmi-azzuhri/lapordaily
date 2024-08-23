@@ -11,10 +11,10 @@
 - npm install
 - npm run dev
 
-### Frontend (run with docker)
+### Frontend (run with Docker)
 - cd frontend
 - docker build -t nama-image:tag .
-- docker run -p 3000:4173 nama-image:tag
+- docker run -p 3000:3000 nama-image:tag
 
 
 

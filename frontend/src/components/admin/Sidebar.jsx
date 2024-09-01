@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 
-function Sidebar() {
+function Sidebar({ setActiveTab, activeTab }) {
   const [activeTab, setActiveTab] = useState("laporan");
   const navigate = useNavigate();
 
@@ -25,6 +25,10 @@ function Sidebar() {
     setActiveTab(tab);
     if (tab === "laporan") {
       navigate("/admin/dashboard");
+    } else if (tab === "dataAnggota") {
+      navigate("/admin/dataAnggota");
+    } else if (tab === "logout") {
+      handleLogout();
     }
   };
 
@@ -45,11 +49,21 @@ function Sidebar() {
         </li>
         <li
           className={`mb-4 px-4 py-2 rounded-md cursor-pointer ${
+            activeTab === "dataAnggota"
+              ? "bg-white text-gray-900"
+              : "hover:bg-white hover:text-gray-900"
+          }`}
+          onClick={() => handleTabClick("dataAnggota")}
+        >
+          Data Anggota
+        </li>
+        <li
+          className={`mb-4 px-4 py-2 rounded-md cursor-pointer ${
             activeTab === "logout"
               ? "bg-white text-gray-900"
               : "hover:bg-white hover:text-gray-900"
           }`}
-          onClick={handleLogout}
+          onClick={() => handleTabClick("logout")}
         >
           Keluar
         </li>

@@ -91,6 +91,7 @@ app.post("/create-admin", async (req, res) => {
 app.get("/users", authenticate, authorize(["ADMIN"]), async (req, res) => {
   try {
     const users = await prisma.user.findMany({
+      where: { role: "USER" },
       select: {
         id: true,
         username: true,

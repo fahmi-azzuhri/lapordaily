@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 
-function Sidebar({ setActiveTab, activeTab }) {
+function Sidebar() {
   const [activeTab, setActiveTab] = useState("laporan");
   const navigate = useNavigate();
 

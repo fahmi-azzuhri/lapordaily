@@ -19,6 +19,14 @@ export default function AppRoutes() {
         }
       />
       <Route
+        path="/admin/dataAnggota"
+        element={
+          <ProtectedRoute roleRequired={"ADMIN"}>
+            <ViewDashboard />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route
         path="/user/input"
         element={
           <ProtectedRoute roleRequired="USER">

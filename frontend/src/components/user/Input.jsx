@@ -3,6 +3,7 @@ import axios from "axios";
 import ViewInput from "../../views/user/ViewInput";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+
 const Input = () => {
   const [name, setName] = useState("");
   const [tanggal, setTanggal] = useState("");
@@ -20,10 +21,11 @@ const Input = () => {
       navigate("/login");
     }
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/laporan", {
+      await axios.post("http://localhost:3000/api/laporan", {
         tanggal,
         nama: name,
         deskripsi: deskripsiList,
@@ -31,7 +33,7 @@ const Input = () => {
         hasil,
         satuan,
       });
-      console.log(response.data);
+      console.log("Data berhasil dikirim");
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
     }

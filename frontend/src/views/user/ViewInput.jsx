@@ -1,5 +1,7 @@
 import React from "react";
-
+import toast, { Toaster } from "react-hot-toast";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 const ViewInput = ({
   name,
   setName,
@@ -17,8 +19,24 @@ const ViewInput = ({
   today,
   hasil,
 }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    ["token", "username", "role"].forEach((cookie) => Cookies.remove(cookie));
+    toast.success("Logout Berhasil", {
+      style: {
+        padding: "9px",
+        borderRadius: "10px",
+      },
+    });
+    setTimeout(() => {
+      navigate("/");
+    }, 3000);
+    setActiveTab("logout");
+  };
   return (
     <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-6 bg-white shadow-md rounded-md">
+      <Toaster position="top-right" reverseOrder={false} />
       <h2 className="text-lg font-semibold mb-4 text-white text-center bg-gray-900 p-3 rounded-md">
         Laporan Harian
       </h2>
@@ -154,12 +172,18 @@ const ViewInput = ({
           </div>
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="flex flex-col gap-2 items-center justify-center">
           <button
             type="submit"
             className="w-full bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Kirim 🛫
+          </button>
+          <button
+            onClick={handleLogout}
+            className="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Logout
           </button>
         </div>
       </form>

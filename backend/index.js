@@ -2,6 +2,7 @@ const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const morgan = require("morgan");
 const {
   generateToken,
   verifyPassword,
@@ -12,12 +13,12 @@ const {
 const app = express();
 const prisma = new PrismaClient();
 const laporanRouter = require("./laporan/laporanRouter");
+
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+app.use(cors({ origin: process.env.CORS_ORIGIN }));
+app.use(morgan("combined"));
+
+// Login endpoint
 app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -60,8 +61,8 @@ app.post(
 // Endpoint untuk membuat akun admin (hanya untuk setup awal)
 app.post("/create-admin", async (req, res) => {
   try {
-    const username = "admin";
-    const password = "adminpassword"; // Ganti dengan password yang aman
+    const username = process.env.ADMIN_USERNAME;
+    const password = process.env.ADMIN_PASSWORD;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const existingAdmin = await prisma.user.findFirst({
@@ -85,9 +86,57 @@ app.post("/create-admin", async (req, res) => {
     res.status(500).json({ error: "Error creating admin account" });
   }
 });
-app.use("/api", laporanRouter, authenticate, authorize(["ADMIN", "USER"]));
+
+// Endpoint untuk mendapatkan semua user
+app.get("/users", authenticate, authorize(["ADMIN"]), async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        role: true,
+      },
+    });
+
+    res.json(users);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Terjadi kesalahan saat mengambil data user" });
+  }
+});
+
+// Endpoint untuk mendapatkan user berdasarkan ID
+app.get("/user/:id", authenticate, authorize(["ADMIN"]), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User tidak ditemukan" });
+    }
+
+    res.json({ id: user.id, username: user.username, role: user.role });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Terjadi kesalahan saat mengambil data user" });
+  }
+});
+
+// Endpoint untuk laporan
+app.use("/api", authenticate, authorize(["ADMIN", "USER"]), laporanRouter);
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Terjadi kesalahan pada server" });
+});
+
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server berjalan di port ${PORT}`);
 });

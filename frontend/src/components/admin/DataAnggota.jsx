@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import PopupAdd from "./PopupAdd";
 
 function DataAnggota() {
   const [data, setData] = useState([]);
-
+  const [popUp, setPopUp] = useState(false);
   const getData = async () => {
     try {
       const response = await axios.get("http://localhost:3000/users", {
@@ -24,18 +25,31 @@ function DataAnggota() {
     getData();
   }, []);
 
+  const handleClickAdd = () => {
+    setPopUp(true);
+  };
+  const handleClosePopup = () => {
+    setPopUp(false);
+  };
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Data Anggota PHL Scrap PP</h1>
+      <div className="flex flex-row justify-between mb-5">
+        <h1 className="text-xl font-bold mb-4">Data Anggota PHL Scrap PP</h1>
+        <button
+          onClick={handleClickAdd}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Tambahkan Anggota
+        </button>
+      </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white">
+        <table className="w-full bg-white">
           <thead>
             <tr className="w-full bg-blue-500 text-white">
               <th className="py-2 px-4 text-left">ID</th>
               <th className="py-2 px-4 text-left">FULL NAME</th>
               <th className="py-2 px-4 text-left">USER ROLE</th>
-              <th className="py-2 px-4 text-left">CREATED AT</th>
-              <th className="py-2 px-4 text-left">STATUS</th>
+              <th className="py-2 px-4 text-left">ACTION</th>
             </tr>
           </thead>
           <tbody>
@@ -44,20 +58,6 @@ function DataAnggota() {
                 <td className="py-2 px-4">{user.id}</td>
                 <td className="py-2 px-4 flex items-center">{user.username}</td>
                 <td className="py-2 px-4">{user.role}</td>
-                <td className="py-2 px-4">{user.createdAt}</td>
-                <td className="py-2 px-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-white ${
-                      user.status === "Active"
-                        ? "bg-green-500"
-                        : user.status === "Suspended"
-                        ? "bg-yellow-500"
-                        : "bg-red-500"
-                    }`}
-                  >
-                    {user.status}
-                  </span>
-                </td>
               </tr>
             ))}
           </tbody>
@@ -70,6 +70,7 @@ function DataAnggota() {
           </div>
         </div>
       </div>
+      {popUp && <PopupAdd onClose={handleClosePopup} />}
     </div>
   );
 }

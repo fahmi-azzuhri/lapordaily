@@ -58,6 +58,7 @@ function PopupAdd({ onClose }) {
             onChange={(e) => setRole(e.target.value)}
             className="block w-full mt-1 p-2 border rounded"
           >
+            <option value="">Pilih Role</option>
             <option value="USER">USER</option>
             <option value="ADMIN">ADMIN</option>
           </select>

@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import Cookies from "js-cookie";
 function Dashboard() {
   const [data, setData] = useState([]);
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/laporan");
+      const response = await axios.get("http://localhost:3000/api/laporan", {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
       setData(response.data);
     } catch (error) {
       console.error("Terjadi kesalahan:", error);

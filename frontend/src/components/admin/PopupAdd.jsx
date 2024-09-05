@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 function PopupAdd({ onClose }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,15 +23,28 @@ function PopupAdd({ onClose }) {
           },
         }
       );
-
-      console.log(response.data);
       onClose();
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
+      if (error.response && error.response.status === 400) {
+        toast.error("Username sudah ada", {
+          style: {
+            padding: "9px",
+            borderRadius: "10px",
+          },
+        });
+      } else {
+        toast.error("Terjadi kesalahan saat menambahkan user", {
+          style: {
+            padding: "9px",
+            borderRadius: "10px",
+          },
+        });
+      }
     }
   };
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="bg-white p-6 rounded-md">
         <h2 className="text-lg font-bold mb-4">Tambah Anggota Baru</h2>
         <label className="block mb-2">

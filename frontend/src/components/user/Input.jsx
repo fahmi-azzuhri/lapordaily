@@ -25,14 +25,23 @@ const Input = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/laporan", {
-        tanggal,
-        nama: name,
-        deskripsi: deskripsiList,
-        jenisPekerjaan,
-        hasil,
-        satuan,
-      });
+      await axios.post(
+        "http://localhost:3000/api/laporan",
+        {
+          tanggal,
+          nama: name,
+          deskripsi: deskripsiList,
+          jenisPekerjaan,
+          hasil,
+          satuan,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       toast.success("Laporan berhasil dibuat", {
         style: {
           padding: "9px",

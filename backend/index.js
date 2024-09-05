@@ -50,6 +50,13 @@ app.post(
       });
 
       res.json({ id: user.id, username: user.username, role: user.role });
+
+      const existingUser = await prisma.user.findUnique({
+        where: { username },
+      });
+      if (existingUser) {
+        return res.status(400).json({ error: "User already exists" });
+      }
     } catch (error) {
       res
         .status(500)

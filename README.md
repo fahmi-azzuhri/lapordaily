@@ -3,6 +3,20 @@
 ## Introduction
 
 This project is a user management and work report system at PT KMI Wire and Cable Tbk PP Support Production using Express, Prisma, and MySQL. The system has two main roles: `ADMIN` and `USER`. Admins can add new users and manage work reports, while users can only log in and manage their own work reports.
+## Screenshots
+
+### 1. Login page
+![loginpage](https://github.com/user-attachments/assets/c7ac1145-2c97-4950-a97d-4e37d34a8fda)
+
+### 2. Role User
+![userpage](https://github.com/user-attachments/assets/849bec7f-0ac0-4fb3-9bb2-f86f488d7cbb)
+
+### 3. Role Admin
+![dashboard-laporan](https://github.com/user-attachments/assets/0ba9f962-e1e9-4615-b0cb-1d6bc72b21c2)
+![dashboard-users](https://github.com/user-attachments/assets/9efdc8e5-0739-4035-a253-d26d176920da)
+![dashboard-adduser](https://github.com/user-attachments/assets/5b2443f1-b686-4e5f-b555-731b3daf8908)
+
+
 
 ## API Endpoints
 

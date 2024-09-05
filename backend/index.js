@@ -43,6 +43,12 @@ app.post(
   async (req, res) => {
     try {
       const { username, password, role } = req.body;
+      const existingUser = await prisma.user.findUnique({
+        where: { username },
+      });
+      if (existingUser) {
+        return res.status(400).json({ error: "User already exists" });
+      }
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = await prisma.user.create({
@@ -50,13 +56,6 @@ app.post(
       });
 
       res.json({ id: user.id, username: user.username, role: user.role });
-
-      const existingUser = await prisma.user.findUnique({
-        where: { username },
-      });
-      if (existingUser) {
-        return res.status(400).json({ error: "User already exists" });
-      }
     } catch (error) {
       res
         .status(500)

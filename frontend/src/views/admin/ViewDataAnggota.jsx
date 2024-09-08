@@ -1,5 +1,7 @@
 import React from "react";
 import PopupAdd from "../../components/admin/PopupAdd";
+import Action from "../../components/admin/Action";
+
 function ViewDataAnggota({ handleClickAdd, handleClosePopup, data, popUp }) {
   return (
     <div className="p-4">
@@ -28,6 +30,9 @@ function ViewDataAnggota({ handleClickAdd, handleClosePopup, data, popUp }) {
                 <td className="py-2 px-4">{user.id}</td>
                 <td className="py-2 px-4 flex items-center">{user.username}</td>
                 <td className="py-2 px-4">{user.role}</td>
+                <td className="py-2 px-4">
+                  <Action userId={user.id} />
+                </td>
               </tr>
             ))}
           </tbody>

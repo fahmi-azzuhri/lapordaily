@@ -4,6 +4,7 @@ import ViewInput from "../../views/user/ViewInput";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
+import Nav from "./navbar/Nav";
 const Input = () => {
   const [name, setName] = useState("");
   const [tanggal, setTanggal] = useState("");
@@ -69,6 +70,7 @@ const Input = () => {
 
   return (
     <>
+      <Nav toast={toast} />
       <Toaster position="top-right" reverseOrder={false} />
       <ViewInput
         name={name}
@@ -86,6 +88,8 @@ const Input = () => {
         setSatuan={setSatuan}
         today={today}
         hasil={hasil}
+        toast={toast}
+        Toaster={Toaster}
       />
     </>
   );

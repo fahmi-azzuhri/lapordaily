@@ -12,7 +12,8 @@ function Nav({ toast }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleClick = () => navigate("/");
+  const handleClick = () => navigate("/user/input");
+  const handleAccount = () => navigate("/user/account");
   const handleLogout = () => {
     ["token", "username", "role"].forEach((cookie) => Cookies.remove(cookie));
     toast.success("Logout Berhasil", {
@@ -28,7 +29,10 @@ function Nav({ toast }) {
   const navList = (
     <ul className="mt-2 flex flex-col text-white gap-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <li className="p-1 text-md">
-        <button className="text-white hover:font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <button
+          onClick={handleAccount}
+          className="text-white hover:font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
           Akun
         </button>
       </li>

@@ -33,7 +33,7 @@ function Nav({ toast }) {
           onClick={handleAccount}
           className="text-white hover:font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          Akun
+          Profil
         </button>
       </li>
       <li className="p-1 text-md">

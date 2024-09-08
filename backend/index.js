@@ -171,6 +171,43 @@ app.delete(
   }
 );
 
+// Endpoint untuk mengubah password user yang sudah login
+app.put("/user/update-password", authenticate, async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    // Dapatkan user dari token yang terverifikasi
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+    });
+
+    // Cek apakah user ditemukan
+    if (!user) {
+      return res.status(404).json({ error: "User tidak ditemukan" });
+    }
+
+    // Verifikasi password lama
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Password lama tidak sesuai" });
+    }
+
+    // Hash password baru
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password di database
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { password: hashedNewPassword },
+    });
+
+    res.json({ message: "Password berhasil diubah" });
+  } catch (error) {
+    console.error("Error saat mengubah password:", error);
+    res.status(500).json({ error: "Terjadi kesalahan saat mengubah password" });
+  }
+});
+
 // Endpoint untuk laporan
 app.use("/api", authenticate, authorize(["ADMIN", "USER"]), laporanRouter);
 

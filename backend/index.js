@@ -133,6 +133,44 @@ app.get("/user/:id", authenticate, authorize(["ADMIN"]), async (req, res) => {
   }
 });
 
+//Endpoint untuk menghapus user
+app.delete(
+  "/user/:id",
+  authenticate,
+  authorize(["ADMIN"]),
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = parseInt(id);
+
+      console.log("ID yang diterima untuk dihapus:", userId); // Log untuk debugging
+
+      if (isNaN(userId)) {
+        return res.status(400).json({ error: "ID tidak valid" });
+      }
+
+      // Cek apakah user yang akan dihapus ada
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        return res.status(404).json({ error: "User tidak ditemukan" });
+      }
+
+      // Hapus user dari database
+      await prisma.user.delete({
+        where: { id: userId },
+      });
+
+      res.json({ message: "User berhasil dihapus" });
+    } catch (error) {
+      console.error("Error saat menghapus user:", error);
+      res.status(500).json({ error: "Terjadi kesalahan saat menghapus user" });
+    }
+  }
+);
+
 // Endpoint untuk laporan
 app.use("/api", authenticate, authorize(["ADMIN", "USER"]), laporanRouter);
 

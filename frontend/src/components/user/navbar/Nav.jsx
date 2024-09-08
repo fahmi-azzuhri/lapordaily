@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar, IconButton, Collapse } from "@material-tailwind/react";
 import Cookies from "js-cookie";
+import { Toaster } from "react-hot-toast";
 function Nav({ toast }) {
   const navigate = useNavigate();
   const [openNav, setOpenNav] = useState(false);
@@ -53,6 +54,7 @@ function Nav({ toast }) {
   );
   return (
     <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 bg-gray-900 rounded-lg">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="flex items-center justify-between text-white">
         <a
           onClick={handleClick}

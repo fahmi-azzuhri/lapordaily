@@ -1,91 +1,114 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "../navbar/Nav";
-
+import axios from "axios";
+import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 function MyAccount() {
-  const [formData, setFormData] = useState({
-    name: "Melissa Peters",
-    email: "melpeters@gmail.com",
-    password: "",
-    dateOfBirth: "1995-05-23",
-    country: "Nigeria",
+  const [name, setName] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const username = Cookies.get("username");
+    if (username) {
+      setName(username);
+    } else {
+      navigate("/login");
+    }
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
-    // Handle form submission, such as sending data to API or backend
-    console.log(formData);
+    try {
+      await axios.put(
+        "http://localhost:3000/user/update-password",
+        {
+          nama: name,
+          oldPassword,
+          newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.success("Password berhasil diubah", {
+        style: {
+          padding: "9px",
+          borderRadius: "10px",
+        },
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } catch (error) {
+      toast.error("Password gagal diubah", {
+        style: {
+          padding: "9px",
+          borderRadius: "10px",
+        },
+      });
+    }
   };
 
   return (
     <>
       <Nav />
+      <Toaster position="top-right" />
       <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-3">
         <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg border">
           <h2 className="text-2xl font-bold mb-6 text-center">Edit Profile</h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="flex justify-center mb-4">
-              <img
-                src="https://via.placeholder.com/100"
-                alt="Profile"
-                className="w-24 h-24 rounded-full border-4 border-indigo-500"
-              />
-            </div>
-
+          <form onSubmit={changePassword} className="space-y-6">
             <div className="space-y-1">
               <label
-                htmlFor="name"
+                htmlFor="username"
                 className="text-sm font-medium text-gray-700"
               >
-                Name
+                Nama
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md"
+                disabled
               />
             </div>
-
             <div className="space-y-1">
               <label
-                htmlFor="email"
+                htmlFor="oldPassword"
                 className="text-sm font-medium text-gray-700"
               >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label
-                htmlFor="password"
-                className="text-sm font-medium text-gray-700"
-              >
-                Password
+                Password Lama
               </label>
               <input
                 type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
+                id="oldPassword"
+                name="oldPassword"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+            <div className="space-y-1">
+              <label
+                htmlFor="newPassword"
+                className="text-sm font-medium text-gray-700"
+              >
+                Password Baru
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
             </div>
@@ -93,7 +116,7 @@ function MyAccount() {
               type="submit"
               className="w-full py-2 px-4 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600"
             >
-              Save Changes
+              Ubah Data
             </button>
           </form>
         </div>

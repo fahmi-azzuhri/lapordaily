@@ -31,7 +31,9 @@ const Dashboard = () => {
   };
 
   const filteredData = data.filter((item) =>
-    item.nama.toLowerCase().includes(searchTerm.toLowerCase())
+    [item.nama, item.jenisPekerjaan, item.deskripsi].some((field) => {
+      return field.toLowerCase().includes(searchTerm.toLowerCase());
+    })
   );
 
   const indexOfLastEntry = currentPage * entriesPerPage;
@@ -89,7 +91,9 @@ const Dashboard = () => {
         <tbody>
           {currentEntries.map((item) => (
             <tr key={item.id} className="hover:bg-gray-100">
-              <td className="border px-4 py-2">{item.tanggal}</td>
+              <td className="border px-4 py-2">
+                {item.tanggal.split("T")[0].split("-").reverse().join("/")}
+              </td>
               <td className="border px-4 py-2">{item.nama}</td>
               <td className="border px-4 py-2">{item.jenisPekerjaan}</td>
               <td className="border px-4 py-2">{item.deskripsi}</td>

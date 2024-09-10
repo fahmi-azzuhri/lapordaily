@@ -39,21 +39,44 @@ router.get("/laporan", async (req, res) => {
   }
 });
 
-// Read Laporan Pekerjaan (Berdasarkan ID)
-router.get("/laporan/:id", async (req, res) => {
-  const { id } = req.params;
+// Read Laporan Pekerjaan (Dibuat oleh User yang sedang login)
+router.get("/laporan/me", async (req, res) => {
   try {
-    const laporan = await prisma.laporanPekerjaan.findUnique({
-      where: { id: parseInt(id) },
+    // Mengambil nama dari token user yang sedang login
+    const username = req.user.username;
+
+    // Cari laporan pekerjaan yang dibuat oleh user tersebut
+    const laporan = await prisma.laporanPekerjaan.findMany({
+      where: { nama: username },
     });
-    if (!laporan) {
-      return res.status(404).json({ error: "Laporan tidak ditemukan" });
+
+    if (laporan.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "Tidak ada laporan yang ditemukan untuk user ini" });
     }
+
     res.json(laporan);
   } catch (error) {
     res.status(500).json({ error: "Terjadi kesalahan saat mengambil laporan" });
   }
 });
+
+// Read Laporan Pekerjaan (Berdasarkan ID)
+// router.get("/laporan/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const laporan = await prisma.laporanPekerjaan.findUnique({
+//       where: { id: parseInt(id) },
+//     });
+//     if (!laporan) {
+//       return res.status(404).json({ error: "Laporan tidak ditemukan" });
+//     }
+//     res.json(laporan);
+//   } catch (error) {
+//     res.status(500).json({ error: "Terjadi kesalahan saat mengambil laporan" });
+//   }
+// });
 
 // Update Laporan Pekerjaan
 router.put("/laporan/:id", async (req, res) => {

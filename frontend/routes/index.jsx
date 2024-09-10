@@ -43,14 +43,6 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       ></Route>
-      <Route
-        path="/user/report"
-        element={
-          <ProtectedRoute roleRequired={"USER"}>
-            <MyReport />
-          </ProtectedRoute>
-        }
-      ></Route>
     </Routes>
   );
 }

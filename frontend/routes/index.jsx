@@ -6,6 +6,7 @@ import Input from "../src/components/user/Input";
 import ViewDashboard from "../src/views/admin/ViewDashboard";
 import ProtectedRoute from "./ProtectedRoutes";
 import MyAccount from "../src/components/user/account/MyAccount";
+import MyReport from "../src/components/user/report/MyReport";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -39,6 +40,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute roleRequired={"USER"}>
             <MyAccount />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path="/user/report"
+        element={
+          <ProtectedRoute roleRequired={"USER"}>
+            <MyReport />
           </ProtectedRoute>
         }
       ></Route>

@@ -15,6 +15,7 @@ function Nav({ toast }) {
 
   const handleClick = () => navigate("/user/input");
   const handleAccount = () => navigate("/user/account");
+  const handleReport = () => navigate("/user/report");
   const handleLogout = () => {
     ["token", "username", "role"].forEach((cookie) => Cookies.remove(cookie));
     toast.success("Logout Berhasil", {
@@ -38,7 +39,10 @@ function Nav({ toast }) {
         </button>
       </li>
       <li className="p-1 text-md">
-        <button className="text-white hover:font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <button
+          onClick={handleReport}
+          className="text-white hover:font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
           Laporan Saya
         </button>
       </li>

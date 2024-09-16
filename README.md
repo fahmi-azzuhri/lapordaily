@@ -9,12 +9,16 @@ This project is a user management and work report system at PT KMI Wire and Cabl
 ![loginpage](https://github.com/user-attachments/assets/c7ac1145-2c97-4950-a97d-4e37d34a8fda)
 
 ### 2. Role User
-![userpage](https://github.com/user-attachments/assets/849bec7f-0ac0-4fb3-9bb2-f86f488d7cbb)
+![Lapor-Daily](https://github.com/user-attachments/assets/c8d46292-f6f4-40bf-b56b-9079f76c3640)
+![Lapor-Daily (1)](https://github.com/user-attachments/assets/9bec18e2-688d-45b6-a625-c904e7ae3100)
+
+
 
 ### 3. Role Admin
-![dashboard-laporan](https://github.com/user-attachments/assets/0ba9f962-e1e9-4615-b0cb-1d6bc72b21c2)
-![dashboard-users](https://github.com/user-attachments/assets/9efdc8e5-0739-4035-a253-d26d176920da)
-![dashboard-adduser](https://github.com/user-attachments/assets/5b2443f1-b686-4e5f-b555-731b3daf8908)
+![Lapor-Daily (2)](https://github.com/user-attachments/assets/34378872-f832-45bf-804c-a25438de29ff)
+![Lapor-Daily (3)](https://github.com/user-attachments/assets/a998fcbd-1e40-4f3d-8e8e-99da55cbd079)
+![Lapor-Daily (4)](https://github.com/user-attachments/assets/0eda13ec-d7e9-4956-94f2-a5a51563d558)
+
 
 
 

@@ -75,10 +75,7 @@ export default function ViewLogin({
             </div>
           </div>
         </div>
-        <button
-          className="block w-full rounded-lg bg-blue-500 px-5 py-3.5 text-sm font-medium text-white hover:bg-blue-700"
-          fullWidth
-        >
+        <button className="block w-full rounded-lg bg-blue-500 px-5 py-3.5 text-sm font-medium text-white hover:bg-blue-700">
           Masuk
         </button>
       </form>

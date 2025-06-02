@@ -1,6 +1,6 @@
 import React from "react";
-import PopupAdd from "../../components/admin/PopupAdd";
-import Action from "../../components/admin/Action";
+import PopupAdd from "../../pages/admin/PopupAdd";
+import Action from "../../pages/admin/Action";
 
 function ViewDataAnggota({ handleClickAdd, handleClosePopup, data, popUp }) {
   return (

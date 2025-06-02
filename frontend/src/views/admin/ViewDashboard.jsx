@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/admin/Sidebar";
-import Dashboard from "../../components/admin/Dashboard";
-import DataAnggota from "../../components/admin/DataAnggota";
+import Sidebar from "../../pages/admin/Sidebar";
+import Dashboard from "../../pages/admin/Dashboard";
+import DataAnggota from "../../pages/admin/DataAnggota";
 
 function ViewDashboard() {
   const [activeTab, setActiveTab] = useState("laporan");

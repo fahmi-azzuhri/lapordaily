@@ -13,7 +13,6 @@ export const ProtectedRoute = ({ children, allowedRole }) => {
     const redirectPath = {
       USER: "/user/dashboard",
       ADMIN: "/admin/dashboard",
-      SUPERADMIN: "/superadmin/dashboard",
     }[role];
 
     return <Navigate to={redirectPath} replace />;

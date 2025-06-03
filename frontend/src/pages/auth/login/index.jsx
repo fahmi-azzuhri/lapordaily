@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const res = await axios.post("http://localhost:3000/auth/login", {
@@ -13,12 +16,12 @@ export default function Login() {
         password,
       });
       Cookies.set("token", res.data.token);
-      Cookies.set("USER", username);
+      Cookies.set("username", res.data.username);
       Cookies.set("role", res.data.role);
       if (res.data.role === "USER") {
-        navigate("/dashboard/user");
+        navigate("/user/dashboard");
       } else {
-        navigate("/dashboard/admin");
+        navigate("/admin/dashboard");
       }
     } catch (err) {
       alert("Login gagal");
@@ -76,7 +79,7 @@ export default function Login() {
 
             <button
               onClick={handleLogin}
-              className="w-full bg-gradient-to-r from-red-400 to-red-500 text-white py-3 rounded-xl font-medium hover:from-red-500 hover:to-red-600 transform hover:scale-[1.02] transition-all duration-200 shadow-lg"
+              className="w-full bg-gradient-to-r from-red-400 to-red-500 text-white py-3 rounded-xl font-medium hover:from-red-500 hover:to-red-600 transform hover:scale-[1.02] transition-all duration-200 shadow-lg cursor-pointer"
             >
               Sign In
             </button>

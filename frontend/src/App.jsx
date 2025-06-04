@@ -4,6 +4,8 @@ import DashboardUser from "./pages/dashboard/dashboardUser";
 import ReportForm from "./components/formModal";
 import { ProtectedRoute } from "./components/protectedRoute";
 import DashboardAdmin from "./pages/dashboard/dashboardAdmin";
+import ListPhl from "./pages/dashboard/dashboardAdmin/listPhl";
+import Report from "./pages/dashboard/dashboardAdmin/report";
 
 function App() {
   return (
@@ -24,6 +26,22 @@ function App() {
           element={
             <ProtectedRoute allowedRole="ADMIN">
               <DashboardAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/listphl"
+          element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <ListPhl />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/report"
+          element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <Report />
             </ProtectedRoute>
           }
         />

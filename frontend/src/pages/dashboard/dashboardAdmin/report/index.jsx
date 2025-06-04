@@ -19,6 +19,9 @@ function Report() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
+                  Tanggal
+                </th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
                   Nama
                 </th>
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
@@ -35,6 +38,9 @@ function Report() {
             <tbody className="bg-white divide-y divide-gray-200">
               {/* Sample row */}
               <tr className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                  9/21/2025
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-gray-900">
                   John Doe
                 </td>

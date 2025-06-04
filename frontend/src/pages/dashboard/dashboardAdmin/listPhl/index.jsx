@@ -44,6 +44,21 @@ function ListPhl() {
     setUsers(response.data);
   };
 
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      alert("User berhasil dihapus");
+      getAllUsers();
+    } catch (error) {
+      alert("Gagal menghapus user");
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getAllUsers();
   }, []);
@@ -74,6 +89,9 @@ function ListPhl() {
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
                   Role
                 </th>
+                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -87,6 +105,14 @@ function ListPhl() {
                     <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                       {user.role}
                     </span>
+                  </td>
+                  <td>
+                    <button
+                      className="bg-red-500 hover:bg-red-600 text-sm text-white px-4 py-2 rounded cursor-pointer"
+                      onClick={() => deleteUser(user.id)}
+                    >
+                      Hapus
+                    </button>
                   </td>
                 </tr>
               ))}

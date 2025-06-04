@@ -13,6 +13,25 @@ router.post("/", auth, isAdmin, async (req, res) => {
   res.json(user);
 });
 
+router.get("/", auth, isAdmin, async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      where: { role: "USER" },
+      select: {
+        id: true,
+        username: true,
+        role: true,
+      },
+    });
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Terjadi kesalahan saat mengambil data user." });
+  }
+});
+
 router.delete("/:id", auth, isAdmin, async (req, res) => {
   const id = parseInt(req.params.id);
   await prisma.user.delete({ where: { id } });

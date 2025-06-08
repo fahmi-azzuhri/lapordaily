@@ -51,7 +51,7 @@ function Report() {
           }
         );
         setReports(response.data.data);
-        setFilteredReports(response.data.data); // Inisialisasi hasil filter awal
+        setFilteredReports(response.data.data);
       } catch (error) {
         console.error("Gagal mengambil data laporan:", error);
       }
@@ -62,15 +62,26 @@ function Report() {
 
   useEffect(() => {
     const lowerSearch = search.toLowerCase();
-    const filtered = reports.filter(
-      (item) =>
+
+    const filtered = reports.filter((item) => {
+      const itemDate = new Date(item.date);
+      const itemMonth = String(itemDate.getMonth() + 1).padStart(2, "0");
+      const itemYear = itemDate.getFullYear().toString();
+
+      const matchBulan = bulan ? itemMonth === bulan : true;
+      const matchTahun = tahun ? itemYear === tahun : true;
+
+      const matchSearch =
         item.user.username.toLowerCase().includes(lowerSearch) ||
         item.workType.toLowerCase().includes(lowerSearch) ||
-        item.description.toLowerCase().includes(lowerSearch)
-    );
+        item.description.toLowerCase().includes(lowerSearch);
+
+      return matchBulan && matchTahun && matchSearch;
+    });
+
     setFilteredReports(filtered);
     setCurrentPage(1);
-  }, [search, reports]);
+  }, [search, bulan, tahun, reports]);
 
   const indexOfLastReport = currentPage * reportsPerPage;
   const indexOfFirstReport = indexOfLastReport - reportsPerPage;

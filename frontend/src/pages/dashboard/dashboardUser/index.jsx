@@ -75,32 +75,31 @@ export default function DashboardUser() {
 
     try {
       const token = Cookies.get("token");
-      const response = await axios("http://localhost:3000/reports", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
+
+      const response = await axios.post(
+        "http://localhost:3000/reports",
+        {
           ...formData,
           nama: username,
-        }),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Laporan berhasil disimpan");
+      setFormData({
+        tanggal: "",
+        pekerjaan: [{ kategori: "", deskripsi: "", hasil: "", satuan: "" }],
       });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        alert(`Gagal menyimpan laporan: ${result.error}`);
-      } else {
-        alert("Laporan berhasil disimpan");
-        setFormData({
-          tanggal: "",
-          pekerjaan: [{ kategori: "", deskripsi: "", hasil: "", satuan: "" }],
-        });
-      }
     } catch (err) {
       console.error("Gagal submit:", err);
-      alert("Terjadi kesalahan saat mengirim data");
+      const errorMsg =
+        err.response?.data?.error || "Terjadi kesalahan saat mengirim data";
+      alert(errorMsg);
     }
   };
 

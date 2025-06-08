@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-
+import axios from "axios";
 export default function DashboardUser() {
   const [username, setUsername] = useState("");
   const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ export default function DashboardUser() {
         kategori: "",
         deskripsi: "",
         hasil: "",
+        satuan: "",
       },
     ],
   });
@@ -44,7 +45,7 @@ export default function DashboardUser() {
       ...prev,
       pekerjaan: [
         ...prev.pekerjaan,
-        { kategori: "", deskripsi: "", hasil: "" },
+        { kategori: "", deskripsi: "", hasil: "", satuan: "" },
       ],
     }));
   };
@@ -56,13 +57,51 @@ export default function DashboardUser() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      ...formData,
-      nama: username,
-    });
-    // Kirim ke backend di sini
+
+    if (!formData.tanggal || formData.pekerjaan.length === 0) {
+      alert("Tanggal dan minimal 1 pekerjaan harus diisi");
+      return;
+    }
+
+    for (let i = 0; i < formData.pekerjaan.length; i++) {
+      const { kategori, deskripsi, hasil, satuan } = formData.pekerjaan[i];
+      if (!kategori || !deskripsi || !hasil || !satuan) {
+        alert(`Pekerjaan ${i + 1} belum lengkap`);
+        return;
+      }
+    }
+
+    try {
+      const token = Cookies.get("token");
+      const response = await axios("http://localhost:3000/reports", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...formData,
+          nama: username,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(`Gagal menyimpan laporan: ${result.error}`);
+      } else {
+        alert("Laporan berhasil disimpan");
+        setFormData({
+          tanggal: "",
+          pekerjaan: [{ kategori: "", deskripsi: "", hasil: "", satuan: "" }],
+        });
+      }
+    } catch (err) {
+      console.error("Gagal submit:", err);
+      alert("Terjadi kesalahan saat mengirim data");
+    }
   };
 
   const kategoriOptions = [
@@ -168,16 +207,32 @@ export default function DashboardUser() {
 
               <div>
                 <label className="block text-sm font-semibold mb-1">
-                  Hasil
+                  Hasil (angka)
                 </label>
-                <select
+                <input
+                  type="number"
                   name="hasil"
                   value={pekerjaan.hasil}
                   onChange={(e) => handleChange(index, e)}
                   className="w-full p-2 border rounded"
+                  placeholder="Masukkan hasil"
+                  required
+                  min={0}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-1">
+                  Satuan
+                </label>
+                <select
+                  name="satuan"
+                  value={pekerjaan.satuan}
+                  onChange={(e) => handleChange(index, e)}
+                  className="w-full p-2 border rounded"
                   required
                 >
-                  <option value="">-- Pilih Hasil --</option>
+                  <option value="">-- Pilih Satuan --</option>
                   {hasilOptions.map((item, idx) => (
                     <option key={idx} value={item}>
                       {item}

@@ -7,7 +7,7 @@ function Report() {
   const [bulan, setBulan] = useState("");
   const [tahun, setTahun] = useState("");
   const [search, setSearch] = useState("");
-  const [groupedReports, setGroupedReports] = useState([]);
+  const [reports, setReports] = useState([]);
   const [filteredReports, setFilteredReports] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const reportsPerPage = 25;
@@ -50,29 +50,8 @@ function Report() {
             },
           }
         );
-
-        const reports = response.data.data;
-
-        const grouped = {};
-        for (let report of reports) {
-          const key = `${report.user.username}_${report.date}`;
-          if (!grouped[key]) {
-            grouped[key] = {
-              date: report.date,
-              username: report.user.username,
-              kategori: [],
-              deskripsi: [],
-              hasil: [],
-            };
-          }
-          grouped[key].kategori.push(report.workType);
-          grouped[key].deskripsi.push(report.description);
-          grouped[key].hasil.push(`${report.result} ${report.unit}`);
-        }
-
-        const groupedArray = Object.values(grouped);
-        setGroupedReports(groupedArray);
-        setFilteredReports(groupedArray);
+        setReports(response.data.data);
+        setFilteredReports(response.data.data); // Inisialisasi hasil filter awal
       } catch (error) {
         console.error("Gagal mengambil data laporan:", error);
       }
@@ -83,15 +62,15 @@ function Report() {
 
   useEffect(() => {
     const lowerSearch = search.toLowerCase();
-    const filtered = groupedReports.filter(
+    const filtered = reports.filter(
       (item) =>
-        item.username.toLowerCase().includes(lowerSearch) ||
-        item.kategori.join(" ").toLowerCase().includes(lowerSearch) ||
-        item.deskripsi.join(" ").toLowerCase().includes(lowerSearch)
+        item.user.username.toLowerCase().includes(lowerSearch) ||
+        item.workType.toLowerCase().includes(lowerSearch) ||
+        item.description.toLowerCase().includes(lowerSearch)
     );
     setFilteredReports(filtered);
     setCurrentPage(1);
-  }, [search, groupedReports]);
+  }, [search, reports]);
 
   const indexOfLastReport = currentPage * reportsPerPage;
   const indexOfFirstReport = indexOfLastReport - reportsPerPage;
@@ -119,7 +98,6 @@ function Report() {
             </h2>
           </div>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
-            {/* Input Search di kiri */}
             <input
               type="text"
               placeholder="Cari username, kategori, deskripsi..."
@@ -127,8 +105,6 @@ function Report() {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full md:w-1/3 border p-2 rounded"
             />
-
-            {/* Ekspor dan filter di kanan */}
             <div className="flex flex-wrap items-center gap-2 ml-auto">
               <select
                 className="border p-2 rounded"
@@ -183,37 +159,35 @@ function Report() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {currentReports.length > 0 ? (
-                currentReports.map((item, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {new Date(item.date).toLocaleDateString("id-ID")}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-gray-900">
-                      {item.username}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-gray-900">
-                      {item.kategori.join(" | ")}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-gray-900">
-                      {item.deskripsi.join(" | ")}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.hasil.join(" | ")}
-                    </td>
-                  </tr>
-                ))
-              ) : (
+              {currentReports.map((report) => (
+                <tr key={report.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {new Date(report.date).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                    {report.user.username}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                    {report.workType}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                    {report.description}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {report.result} {report.unit}
+                  </td>
+                </tr>
+              ))}
+              {filteredReports.length === 0 && (
                 <tr>
                   <td colSpan="5" className="text-center py-4 text-gray-500">
-                    Tidak ada laporan yang cocok
+                    Belum ada laporan
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
 
-          {/* Pagination Controls */}
           <div className="flex justify-between items-center px-6 py-4">
             <span className="text-sm text-gray-600">
               Halaman {currentPage} dari {totalPages}

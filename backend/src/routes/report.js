@@ -2,6 +2,7 @@ const express = require("express");
 const prisma = require("../utils/client");
 const { auth } = require("../middleware/auth");
 const router = express.Router();
+const ExcelJS = require("exceljs");
 
 // POST - Create new report
 router.post("/", auth, async (req, res) => {
@@ -287,6 +288,84 @@ router.delete("/:id", auth, async (req, res) => {
     res.status(500).json({
       error: "Terjadi kesalahan saat menghapus laporan",
     });
+  }
+});
+
+router.get("/admin/export", auth, async (req, res) => {
+  try {
+    if (req.user.role !== "ADMIN") {
+      return res.status(403).json({ error: "Akses ditolak" });
+    }
+
+    const { bulan, tahun, pekerjaan } = req.query;
+
+    // Validasi bulan dan tahun
+    if (!bulan || !tahun) {
+      return res.status(400).json({ error: "Bulan dan tahun wajib diisi" });
+    }
+
+    const startDate = new Date(`${tahun}-${bulan}-01`);
+    const endDate = new Date(startDate);
+    endDate.setMonth(endDate.getMonth() + 1);
+
+    const where = {
+      date: {
+        gte: startDate,
+        lt: endDate,
+      },
+    };
+
+    if (pekerjaan) {
+      where.workType = pekerjaan;
+    }
+
+    const reports = await prisma.report.findMany({
+      where,
+      orderBy: { date: "asc" },
+      include: {
+        user: {
+          select: { username: true },
+        },
+      },
+    });
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Laporan");
+
+    worksheet.columns = [
+      { header: "Tanggal", key: "tanggal", width: 15 },
+      { header: "User", key: "username", width: 20 },
+      { header: "Kategori", key: "kategori", width: 20 },
+      { header: "Deskripsi", key: "deskripsi", width: 30 },
+      { header: "Hasil", key: "hasil", width: 15 },
+      { header: "Satuan", key: "unit", width: 10 },
+    ];
+
+    reports.forEach((r) => {
+      worksheet.addRow({
+        tanggal: r.date.toISOString().split("T")[0],
+        username: r.user.username,
+        kategori: r.workType,
+        deskripsi: r.description,
+        hasil: r.result,
+        unit: r.unit,
+      });
+    });
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=Laporan_${bulan}_${tahun}.xlsx`
+    );
+
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (error) {
+    console.error("Export error:", error);
+    res.status(500).json({ error: "Gagal mengekspor laporan" });
   }
 });
 

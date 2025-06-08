@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+
 export default function DashboardUser() {
   const [username, setUsername] = useState("");
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function DashboardUser() {
       },
     ],
   });
+  const [showSignOut, setShowSignOut] = useState(false);
 
   useEffect(() => {
     const cookieUsername = Cookies.get("username");
@@ -95,12 +97,20 @@ export default function DashboardUser() {
         tanggal: "",
         pekerjaan: [{ kategori: "", deskripsi: "", hasil: "", satuan: "" }],
       });
+      setShowSignOut(true);
     } catch (err) {
       console.error("Gagal submit:", err);
       const errorMsg =
         err.response?.data?.error || "Terjadi kesalahan saat mengirim data";
       alert(errorMsg);
     }
+  };
+
+  const handleSignout = () => {
+    Cookies.remove("token");
+    Cookies.remove("username");
+    Cookies.remove("role");
+    window.location.href = "/";
   };
 
   const kategoriOptions = [
@@ -256,6 +266,14 @@ export default function DashboardUser() {
           >
             Kirim Laporan
           </button>
+          {showSignOut && (
+            <button
+              onClick={handleSignout}
+              className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+            >
+              Keluar
+            </button>
+          )}
         </form>
       </div>
     </div>

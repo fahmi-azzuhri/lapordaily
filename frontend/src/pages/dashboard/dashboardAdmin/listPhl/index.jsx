@@ -3,7 +3,7 @@ import AdminLayout from "../../../../layout/adminLayout";
 import Cookies from "js-cookie";
 import axios from "axios";
 
-function ListPhl() {
+export default function ListPhl() {
   const [showModal, setShowModal] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -173,5 +173,3 @@ function ListPhl() {
     </AdminLayout>
   );
 }
-
-export default ListPhl;

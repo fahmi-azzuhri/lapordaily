@@ -3,7 +3,7 @@ import AdminLayout from "../../../../layout/adminLayout";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-function Report() {
+export default function Report() {
   const [bulan, setBulan] = useState("");
   const [tahun, setTahun] = useState("");
   const [search, setSearch] = useState("");
@@ -225,5 +225,3 @@ function Report() {
     </AdminLayout>
   );
 }
-
-export default Report;

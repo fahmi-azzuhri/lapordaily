@@ -20,7 +20,7 @@ export default function Sidebar() {
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
             <div className="w-4 h-4 bg-blue-600 rounded"></div>
           </div>
-          <span className="font-semibold text-lg">Lapor Daily</span>
+          <span className="font-semibold text-lg">Laporan Scrap PP</span>
         </div>
       </div>
 

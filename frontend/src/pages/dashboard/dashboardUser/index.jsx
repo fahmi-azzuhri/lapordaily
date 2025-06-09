@@ -120,7 +120,8 @@ export default function DashboardUser() {
     "CU MV",
     "HV Hidrolik",
     "Sortir Kabel",
-    "Scrap Tromol Oren",
+    "Scrap Tromol Oren AL",
+    "Scrap Tromol Oren CU",
     "Spulan Xlpe",
     "Spulan Pvc",
     "Cat Tromol",
@@ -128,6 +129,7 @@ export default function DashboardUser() {
     "FK",
     "Kalibrasi",
     "Kebersihan Hall",
+    "Lainnya",
   ];
 
   const hasilOptions = ["Kg", "Palet", "Box", "Lainnya"];

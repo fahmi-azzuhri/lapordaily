@@ -79,7 +79,7 @@ export default function DashboardUser() {
       const token = Cookies.get("token");
 
       const response = await axios.post(
-        "http://localhost:3000/reports",
+        `${import.meta.env.VITE_API_BASE_URL}/reports`,
         {
           ...formData,
           nama: username,

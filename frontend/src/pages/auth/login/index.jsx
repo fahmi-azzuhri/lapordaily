@@ -11,10 +11,13 @@ export default function Login() {
   const navigate = useNavigate();
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+        {
+          username,
+          password,
+        }
+      );
       Cookies.set("token", res.data.token);
       Cookies.set("username", res.data.username);
       Cookies.set("role", res.data.role);

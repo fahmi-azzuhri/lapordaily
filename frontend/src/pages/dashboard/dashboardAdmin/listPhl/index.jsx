@@ -14,7 +14,7 @@ export default function ListPhl({ withLayout = true, mode = "full" }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3000/users", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,11 +40,14 @@ export default function ListPhl({ withLayout = true, mode = "full" }) {
 
   const getAllUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/users", {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
       setUsers(response.data);
     } catch (error) {
       console.error("Gagal mengambil data user:", error);
@@ -53,7 +56,7 @@ export default function ListPhl({ withLayout = true, mode = "full" }) {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/users/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/users/${id}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
         },

@@ -21,7 +21,7 @@ export default function Report({ withLayout = true, mode = "full" }) {
     const fetchReports = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/reports/admin/all",
+          `${import.meta.env.VITE_API_BASE_URL}/reports/admin/all`,
           {
             headers: { Authorization: `Bearer ${Cookies.get("token")}` },
           }

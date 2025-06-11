@@ -38,11 +38,14 @@ export default function DashboardAdmin() {
     };
     const fetchTotalUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/users/count", {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/users/count`,
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+          }
+        );
         setTotalUser(res.data.totalUser);
       } catch (error) {
         console.error("Gagal mengambil total user:", error);

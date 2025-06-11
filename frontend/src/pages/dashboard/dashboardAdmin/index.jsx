@@ -11,6 +11,7 @@ import {
   Menu,
 } from "lucide-react";
 import AdminLayout from "../../../layout/adminLayout";
+import ListPhl from "./listPhl";
 import Report from "./report";
 import { useNavigate } from "react-router-dom";
 
@@ -22,17 +23,6 @@ export default function DashboardAdmin() {
     { icon: Users, label: "List PHL" },
     { icon: Users, label: "Report" },
     { icon: LogOut, label: "Sign Out" },
-  ];
-
-  const recentCustomers = [
-    { name: "David", avatar: "bg-orange-400", initials: "D" },
-    { name: "Muhammad", avatar: "bg-gray-400", initials: "M" },
-    { name: "Amelia", avatar: "bg-pink-400", initials: "A" },
-    { name: "Olivia", avatar: "bg-green-400", initials: "O" },
-    { name: "Amit", avatar: "bg-blue-400", initials: "A" },
-    { name: "Ashley", avatar: "bg-purple-400", initials: "A" },
-    { name: "John", avatar: "bg-red-400", initials: "J" },
-    { name: "Anna", avatar: "bg-indigo-400", initials: "A" },
   ];
 
   return (
@@ -110,26 +100,8 @@ export default function DashboardAdmin() {
 
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm">
-              <div className="p-6 border-b border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Recent Customers
-                </h2>
-              </div>
               <div className="p-6 space-y-4">
-                {recentCustomers.map((customer, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div
-                      className={`w-10 h-10 ${customer.avatar} rounded-full flex items-center justify-center text-white font-medium`}
-                    >
-                      {customer.initials}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">
-                        {customer.name}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                <ListPhl withLayout={false} mode="summary" />
               </div>
             </div>
           </div>

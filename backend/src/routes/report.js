@@ -369,4 +369,19 @@ router.get("/admin/export", auth, async (req, res) => {
   }
 });
 
+// GET - Total laporan
+router.get("/admin/total", auth, async (req, res) => {
+  try {
+    if (req.user.role !== "ADMIN") {
+      return res.status(403).json({ error: "Akses ditolak" });
+    }
+
+    const total = await prisma.report.count();
+    res.json({ total });
+  } catch (error) {
+    console.error("Error getting total reports:", error);
+    res.status(500).json({ error: "Gagal mengambil total laporan" });
+  }
+});
+
 module.exports = router;

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Home,
   Users,
   LogOut,
-  Eye,
+  NotebookPen,
   ShoppingCart,
   MessageCircle,
   DollarSign,
@@ -14,9 +14,32 @@ import AdminLayout from "../../../layout/adminLayout";
 import ListPhl from "./listPhl";
 import Report from "./report";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function DashboardAdmin() {
   const navigate = useNavigate();
+  const [totalReport, setTotalReport] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalReports = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:3000/reports/admin/total",
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+          }
+        );
+        setTotalReport(res.data.total);
+      } catch (error) {
+        console.error("Gagal mengambil total laporan:", error);
+      }
+    };
+
+    fetchTotalReports();
+  }, []);
 
   const sidebarItems = [
     { icon: Home, label: "Dashboard", active: true },
@@ -50,10 +73,12 @@ export default function DashboardAdmin() {
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Daily Views</p>
-                <p className="text-2xl font-bold text-gray-900">1,504</p>
+                <p className="text-gray-500 text-sm">Total Report</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {totalReport}
+                </p>
               </div>
-              <Eye className="w-8 h-8 text-gray-400" />
+              <NotebookPen className="w-8 h-8 text-gray-400" />
             </div>
           </div>
           <div className="bg-blue-500 p-6 rounded-xl shadow-sm text-white">

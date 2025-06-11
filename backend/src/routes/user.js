@@ -38,4 +38,19 @@ router.delete("/:id", auth, isAdmin, async (req, res) => {
   res.json({ message: "User dihapus" });
 });
 
+// Endpoint untuk menampilkan jumlah keseluruhan user
+router.get("/count", auth, isAdmin, async (req, res) => {
+  try {
+    const count = await prisma.user.count({
+      where: { role: "USER" },
+    });
+    res.json({ totalUser: count });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Terjadi kesalahan saat menghitung jumlah user.",
+    });
+  }
+});
+
 module.exports = router;

@@ -4,9 +4,7 @@ import {
   Users,
   LogOut,
   NotebookPen,
-  ShoppingCart,
-  MessageCircle,
-  DollarSign,
+  UserRound,
   Search,
   Menu,
 } from "lucide-react";
@@ -20,6 +18,7 @@ import axios from "axios";
 export default function DashboardAdmin() {
   const navigate = useNavigate();
   const [totalReport, setTotalReport] = useState(0);
+  const [user, setTotalUser] = useState(0);
 
   useEffect(() => {
     const fetchTotalReports = async () => {
@@ -37,8 +36,21 @@ export default function DashboardAdmin() {
         console.error("Gagal mengambil total laporan:", error);
       }
     };
+    const fetchTotalUsers = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/users/count", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        });
+        setTotalUser(res.data.totalUser);
+      } catch (error) {
+        console.error("Gagal mengambil total user:", error);
+      }
+    };
 
     fetchTotalReports();
+    fetchTotalUsers();
   }, []);
 
   const sidebarItems = [
@@ -63,7 +75,7 @@ export default function DashboardAdmin() {
               />
             </div>
           </div>
-          <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+          {/* <div className="w-10 h-10 bg-gray-300 rounded-full"></div> */}
         </div>
       </header>
 
@@ -84,28 +96,10 @@ export default function DashboardAdmin() {
           <div className="bg-blue-500 p-6 rounded-xl shadow-sm text-white">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm">Sales</p>
-                <p className="text-2xl font-bold">80</p>
+                <p className="text-blue-100 text-sm">Total PHL</p>
+                <p className="text-2xl font-bold"> {user} </p>
               </div>
-              <ShoppingCart className="w-8 h-8 text-blue-200" />
-            </div>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">Comments</p>
-                <p className="text-2xl font-bold text-gray-900">284</p>
-              </div>
-              <MessageCircle className="w-8 h-8 text-gray-400" />
-            </div>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">Earning</p>
-                <p className="text-2xl font-bold text-gray-900">$7,842</p>
-              </div>
-              <DollarSign className="w-8 h-8 text-gray-400" />
+              <UserRound className="w-8 h-8 text-blue-200" />
             </div>
           </div>
         </div>
@@ -116,7 +110,7 @@ export default function DashboardAdmin() {
             <div className="flex justify-end">
               <button
                 onClick={() => navigate("/admin/report")}
-                className="text-blue-600 hover:underline"
+                className="text-blue-600 hover:underline cursor-pointer"
               >
                 Lihat Semua Laporan →
               </button>
@@ -127,6 +121,14 @@ export default function DashboardAdmin() {
             <div className="bg-white rounded-xl shadow-sm">
               <div className="p-6 space-y-4">
                 <ListPhl withLayout={false} mode="summary" />
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => navigate("/admin/listphl")}
+                    className="text-blue-600 hover:underline cursor-pointer"
+                  >
+                    Lihat Semua PHL →
+                  </button>
+                </div>
               </div>
             </div>
           </div>
